@@ -12,9 +12,9 @@ public class Bit {
     }
 
     public Bit(int r, int g, int b){
-        this.r = r;
-        this.g = g;
-        this.b = b;
+        this.r = (r<=255) ? r : 255;
+        this.g = (g<=255) ? g : 255;
+        this.b = (b<=255) ? b : 255;
     }
 
     public Bit add(Bit bit){

@@ -81,17 +81,25 @@ public class Engine extends JPanel implements Runnable{
         //screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         //screenMap.multiply(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         //screenMap.divide(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        for(int i = 50; i <= 400; i=i+100) {
-            screenMap.set(Sprites.rect(1, 1, new Bit(255, 255, 255)), (int) count, (int) Math.floor(Math.sin(count) * i/10) + i);
+        if(count < WIDTH){
+            if(Math.abs(Math.sin(count / 32)-Math.sin(2 * Math.PI)) < 0.01){
+                for(int j = 0; j < HEIGHT; j++){
+                    screenMap.bitArray[(int)count][j] = new Bit(255, 0, 255);
+                }
+            }
+            for(int i=200; i < HEIGHT-200; i++){
+                screenMap.set(Sprites.rect(1, 1, new Bit(r.nextInt(255), (int)(Math.abs(Math.sin(count / 32)*255)), (int)(Math.abs(Math.cos(count/32)*255)))), (int) count, (int) Math.floor(Math.sin(count / 32) * 64) + i);
+            }
         }
 
-        for(int xC = 0; xC < WIDTH; xC++){
-            for(int yC = 0; yC < HEIGHT; yC++){
+        for (int xC = 0; xC < WIDTH; xC++) {
+            for (int yC = 0; yC < HEIGHT; yC++) {
                 Color c = new Color(screenMap.bitArray[xC][yC].r, screenMap.bitArray[xC][yC].g, screenMap.bitArray[xC][yC].b);
                 bImage.setRGB(xC, yC, c.getRGB());
             }
         }
-        count = count + 0.1;
+
+        count = count + 1;
         g.drawImage(bImage, 0, 0, this);
     }
 
