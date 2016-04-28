@@ -20,12 +20,9 @@ public class Engine extends JPanel{
         BufferedImage bImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics g = bImage.getGraphics();
 
-        int r = 0;
-
         for(int xL = 0; xL < WIDTH; xL++){
             for(int yL = 0; yL < HEIGHT; yL++){
-                r++;
-                int rColor = new Color((int)Math.abs(Math.floor(255*Math.sin(r))), 0, (int)Math.abs(Math.floor(255*Math.cos(r)))).getRGB();
+                int rColor = new Color((int)Math.abs(Math.floor(255*Math.sin(xL))), 0, (int)Math.abs(Math.floor(255*Math.cos(yL)))).getRGB();
                 bImage.setRGB(xL, yL, rColor);
             }
         }
