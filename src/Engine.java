@@ -11,7 +11,7 @@ public class Engine extends JPanel implements Runnable{
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
 
-    private int count = 0;
+    private double count = 0;
 
     private Thread runThread;
     private boolean running = false;
@@ -76,11 +76,14 @@ public class Engine extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         Random r = new Random();
         BufferedImage bImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        screenMap.set(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        screenMap.add(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        screenMap.multiply(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        screenMap.divide(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        //screenMap.set(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        //screenMap.add(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        //screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        //screenMap.multiply(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        //screenMap.divide(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        for(int i = 50; i <= 400; i=i+100) {
+            screenMap.set(Sprites.rect(1, 1, new Bit(255, 255, 255)), (int) count, (int) Math.floor(Math.sin(count) * i/10) + i);
+        }
 
         for(int xC = 0; xC < WIDTH; xC++){
             for(int yC = 0; yC < HEIGHT; yC++){
@@ -88,7 +91,7 @@ public class Engine extends JPanel implements Runnable{
                 bImage.setRGB(xC, yC, c.getRGB());
             }
         }
-        count++;
+        count = count + 0.1;
         g.drawImage(bImage, 0, 0, this);
     }
 
