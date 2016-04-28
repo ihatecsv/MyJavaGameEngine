@@ -27,4 +27,8 @@ public class Bitmap{
     public void subtract(Bitmap bitmap, int x, int y){
 
     }
+
+    public void set(Bitmap bitmap, int x, int y){
+
+    }
 }
