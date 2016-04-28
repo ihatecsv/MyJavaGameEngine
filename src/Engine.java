@@ -59,7 +59,7 @@ public class Engine extends JPanel implements Runnable{
     public void run() {
         while(running) {
             repaint();
-            try {Thread.sleep(100);} catch (InterruptedException ex) {}
+            try {Thread.sleep(10);} catch (InterruptedException ex) {}
             synchronized (runThread) {
                 if(paused) {
                     try {
@@ -77,7 +77,11 @@ public class Engine extends JPanel implements Runnable{
         Random r = new Random();
         BufferedImage bImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         screenMap.set(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        screenMap.add(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        screenMap.multiply(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        screenMap.divide(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+
         for(int xC = 0; xC < WIDTH; xC++){
             for(int yC = 0; yC < HEIGHT; yC++){
                 Color c = new Color(screenMap.bitArray[xC][yC].r, screenMap.bitArray[xC][yC].g, screenMap.bitArray[xC][yC].b);

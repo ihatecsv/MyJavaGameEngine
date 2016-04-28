@@ -40,6 +40,21 @@ public class Bitmap{
         }
     }
 
+    public void multiply(Bitmap bitmap, int x, int y){
+        for(int xC = 0; xC < bitmap.bitArray.length; xC++){
+            for(int yC = 0; yC < bitmap.bitArray[0].length; yC++) {
+                bitArray[x+xC][y+yC] = bitArray[x+xC][y+yC].multiply(bitmap.bitArray[xC][yC]);
+            }
+        }
+    }
+
+    public void divide(Bitmap bitmap, int x, int y){
+        for(int xC = 0; xC < bitmap.bitArray.length; xC++){
+            for(int yC = 0; yC < bitmap.bitArray[0].length; yC++) {
+                bitArray[x+xC][y+yC] = bitArray[x+xC][y+yC].divide(bitmap.bitArray[xC][yC]);
+            }
+        }
+    }
     public void set(Bitmap bitmap, int x, int y){
         for(int xC = 0; xC < bitmap.bitArray.length; xC++){
             for(int yC = 0; yC < bitmap.bitArray[0].length; yC++) {

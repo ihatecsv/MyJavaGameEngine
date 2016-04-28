@@ -43,9 +43,9 @@ public class Bit {
 
     public Bit divide(Bit bit){
         Bit rBit = new Bit();
-        rBit.r = (r/bit.r>=0) ? r/bit.r : 0;
-        rBit.g = (g/bit.g>=0) ? g/bit.g : 0;
-        rBit.b = (b/bit.b>=0) ? b/bit.b : 0;
+        if(bit.r != 0){rBit.r = (r/bit.r>=0) ? r/bit.r : 0;}
+        if(bit.g != 0){rBit.g = (g/bit.g>=0) ? g/bit.g : 0;}
+        if(bit.b != 0){rBit.b = (b/bit.b>=0) ? b/bit.b : 0;}
         return rBit;
     }
 }
