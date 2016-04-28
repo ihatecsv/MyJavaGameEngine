@@ -74,9 +74,10 @@ public class Engine extends JPanel implements Runnable{
     }
 
     public void paintComponent(Graphics g) {
+        Random r = new Random();
         BufferedImage bImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        screenMap.set(Sprites.rect(200,200, new Bit(255, 255, 255)), 20, 20);
-        screenMap.subtract(Sprites.rect(50, 50, new Bit(255, 0, 0)), 20, 20);
+        screenMap.set(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
+        screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         for(int xC = 0; xC < WIDTH; xC++){
             for(int yC = 0; yC < HEIGHT; yC++){
                 Color c = new Color(screenMap.bitArray[xC][yC].r, screenMap.bitArray[xC][yC].g, screenMap.bitArray[xC][yC].b);
