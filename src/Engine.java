@@ -1,3 +1,4 @@
+import logic.MathHelper;
 import render.Bit;
 import render.Bitmap;
 import render.Sprites;
@@ -10,6 +11,17 @@ import javax.swing.*;
 public class Engine extends JPanel implements Runnable{
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
+    public static final int SCALE = 4;
+
+    Random r = new Random();
+
+    int r1 = r.nextInt(255);
+    int g1 = r.nextInt(255);
+    int b1 = r.nextInt(255);
+
+    int r2 = r.nextInt(255);
+    int g2 = r.nextInt(255);
+    int b2 = r.nextInt(255);
 
     private double count = 0;
 
@@ -17,10 +29,10 @@ public class Engine extends JPanel implements Runnable{
     private boolean running = false;
     private boolean paused = false;
 
-    private Bitmap screenMap = new Bitmap(WIDTH, HEIGHT);
+    private Bitmap screenMap = new Bitmap(WIDTH*SCALE, HEIGHT*SCALE);
 
     public Engine(){
-        setSize(WIDTH, HEIGHT);
+        setSize(WIDTH*SCALE, HEIGHT*SCALE);
     }
 
     public void start() {
@@ -74,28 +86,26 @@ public class Engine extends JPanel implements Runnable{
     }
 
     public void paintComponent(Graphics g) {
-        Random r = new Random();
-        BufferedImage bImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bImage = new BufferedImage(WIDTH*SCALE, HEIGHT*SCALE, BufferedImage.TYPE_INT_RGB);
+        screenMap.set(Sprites.rect(64,64, new Bit(r1, g1, b1)), 0, 0);
+        screenMap.set(Sprites.rect(64,64, new Bit(r2, g2, b2)), WIDTH-64, 0);
         //screenMap.set(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         //screenMap.add(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         //screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         //screenMap.multiply(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         //screenMap.divide(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
         if(count < WIDTH){
-            if(Math.abs(Math.sin(count / 32)-Math.sin(2 * Math.PI)) < 0.01){
-                for(int j = 0; j < HEIGHT; j++){
-                    screenMap.bitArray[(int)count][j] = new Bit(255, 0, 255);
-                }
-            }
-            for(int i=200; i < HEIGHT-200; i++){
-                screenMap.set(Sprites.rect(1, 1, new Bit(r.nextInt(255), (int)(Math.abs(Math.sin(count / 32)*255)), (int)(Math.abs(Math.cos(count/32)*255)))), (int) count, (int) Math.floor(Math.sin(count / 32) * 64) + i);
-            }
+            long rVal = MathHelper.map((int)count, 0, WIDTH, r1, r2);
+            long gVal = MathHelper.map((int)count, 0, WIDTH, g1, g2);
+            long bVal = MathHelper.map((int)count, 0, WIDTH, b1, b2);
+
+            screenMap.set(Sprites.rect(8, 8, new Bit((int)rVal, (int)gVal, (int)bVal)), (int) count, (int) Math.floor(Math.cos(count / 32) * 64) + HEIGHT/2);
         }
 
         for (int xC = 0; xC < WIDTH; xC++) {
             for (int yC = 0; yC < HEIGHT; yC++) {
                 Color c = new Color(screenMap.bitArray[xC][yC].r, screenMap.bitArray[xC][yC].g, screenMap.bitArray[xC][yC].b);
-                bImage.setRGB(xC, yC, c.getRGB());
+                bImage.setRGB(xC*SCALE, yC*SCALE, c.getRGB());
             }
         }
 
@@ -110,7 +120,7 @@ public class Engine extends JPanel implements Runnable{
         frame.getContentPane().add(engine);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
+        frame.setSize(WIDTH*SCALE, HEIGHT*SCALE);
         frame.setVisible(true);
     }
 }
