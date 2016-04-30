@@ -1,4 +1,6 @@
 import logic.MathHelper;
+import logic.PhysicsDomain;
+import logic.PhysicsObject;
 import render.Bit;
 import render.Bitmap;
 import render.Sprites;
@@ -11,7 +13,8 @@ import javax.swing.*;
 public class Engine extends JPanel implements Runnable{
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
-    public static final int SCALE = 4;
+    public static final int SCALE = 1;
+    public static final int TICKTIME = 10;
 
     Random r = new Random();
 
@@ -29,7 +32,8 @@ public class Engine extends JPanel implements Runnable{
     private boolean running = false;
     private boolean paused = false;
 
-    private Bitmap screenMap = new Bitmap(WIDTH*SCALE, HEIGHT*SCALE);
+    private static Bitmap screenMap = new Bitmap(WIDTH*SCALE, HEIGHT*SCALE);
+    private static PhysicsDomain screenDomain = new PhysicsDomain(WIDTH, HEIGHT);
 
     public Engine(){
         setSize(WIDTH*SCALE, HEIGHT*SCALE);
@@ -38,10 +42,11 @@ public class Engine extends JPanel implements Runnable{
     public void start() {
         running = true;
         paused = false;
-        if(runThread == null || !runThread.isAlive())
+        if(runThread == null || !runThread.isAlive()) {
             runThread = new Thread(this);
-        else if(runThread.isAlive())
+        }else if(runThread.isAlive()) {
             throw new IllegalStateException("Thread already started.");
+        }
         runThread.start();
     }
 
@@ -71,7 +76,7 @@ public class Engine extends JPanel implements Runnable{
     public void run() {
         while(running) {
             repaint();
-            try {Thread.sleep(10);} catch (InterruptedException ex) {}
+            try {Thread.sleep(TICKTIME);} catch (InterruptedException ex) {}
             synchronized (runThread) {
                 if(paused) {
                     try {
@@ -87,20 +92,10 @@ public class Engine extends JPanel implements Runnable{
 
     public void paintComponent(Graphics g) {
         BufferedImage bImage = new BufferedImage(WIDTH*SCALE, HEIGHT*SCALE, BufferedImage.TYPE_INT_RGB);
-        screenMap.set(Sprites.rect(64,64, new Bit(r1, g1, b1)), 0, 0);
-        screenMap.set(Sprites.rect(64,64, new Bit(r2, g2, b2)), WIDTH-64, 0);
-        //screenMap.set(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        //screenMap.add(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        //screenMap.subtract(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        //screenMap.multiply(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        //screenMap.divide(Sprites.rect(r.nextInt(200), r.nextInt(200), new Bit(r.nextInt(200), r.nextInt(255), r.nextInt(255))), r.nextInt(200), r.nextInt(200));
-        if(count < WIDTH){
-            long rVal = MathHelper.map((int)count, 0, WIDTH, r1, r2);
-            long gVal = MathHelper.map((int)count, 0, WIDTH, g1, g2);
-            long bVal = MathHelper.map((int)count, 0, WIDTH, b1, b2);
+        //screenMap.set(Sprites.rect(64,64, new Bit(r1, g1, b1)), 0, 0);
 
-            screenMap.set(Sprites.rect(8, 8, new Bit((int)rVal, (int)gVal, (int)bVal)), (int) count, (int) Math.floor(Math.cos(count / 32) * 64) + HEIGHT/2);
-        }
+        screenDomain.simulate(TICKTIME*0.001);
+        screenMap.set(screenDomain.render(), 0, 0);
 
         for (int xC = 0; xC < WIDTH; xC++) {
             for (int yC = 0; yC < HEIGHT; yC++) {
@@ -109,11 +104,14 @@ public class Engine extends JPanel implements Runnable{
             }
         }
 
+
         count = count + 1;
         g.drawImage(bImage, 0, 0, this);
     }
 
     public static void main(String[] args){
+        PhysicsObject newPhys = new PhysicsObject(50, 50, 0, 0 ,0);
+        screenDomain.add(newPhys);
         JFrame frame = new JFrame();
         Engine engine = new Engine();
         engine.start();
