@@ -11,7 +11,7 @@ public class Physics {
     public double xPull;
     public double yUpperBound;
     public double yLowerBound;
-    public double XLeftBound;
+    public double xLeftBound;
     public double xRightBound;
     public double dragCoeff;
     
@@ -25,7 +25,7 @@ public class Physics {
         this.xRightBound = xZoneCenter+xSize;
         this.xLeftBound = xZoneCenter-xSize;
         //Define drag in area
-        this.dragCoeff = dragCoeff
+        this.dragCoeff = dragCoeff;
     }
     
     public void Physics(double yPull, double xPull, double dragCoeff){
@@ -33,7 +33,7 @@ public class Physics {
         this.yPull = yPull;
         this.xPull = xPull;
         //Define drag in area
-        this.dragCoeff = dragCoeff
+        this.dragCoeff = dragCoeff;
     }
     
     

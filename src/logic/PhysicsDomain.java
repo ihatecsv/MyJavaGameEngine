@@ -22,7 +22,8 @@ public class PhysicsDomain {
                 obj.simulate(time);
         }
     }
-
+    //TODO: Rewrite rendering of physics domains
+    /*
     public Bitmap render(){
         Bitmap rBMP = new Bitmap(width, height);
         for(PhysicsObject obj : physObjArray){
@@ -30,4 +31,5 @@ public class PhysicsDomain {
         }
         return rBMP;
     }
+    */
 }

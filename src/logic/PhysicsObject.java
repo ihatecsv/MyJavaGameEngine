@@ -23,22 +23,22 @@ public class PhysicsObject {
         this.physics = newPhysics;
     }
     public void changePhysics(){
-        this.physics = new Physics(0,0,0); // Null Physics
+        this.physics = new Physics(); // Null Physics
     }
     
     public void simulate(double time){
         y = (yVelocity * time) + (0.5*physics.yPull*time*time);
         yVelocity = yVelocity + physics.yPull * time;
-        if (yVelocity>dragCoeff){
-            yVelocity = yVelocity-((dragCoeff-yVelocity)*time) // yVelocity returns to terminal velocity in 1s
+        if (yVelocity>physics.dragCoeff){
+            yVelocity = yVelocity-((physics.dragCoeff-yVelocity)*time); // yVelocity returns to terminal velocity in 1s
         }
-        System.out.println(objName+ " : " y + " / " + yVelocity);
+        System.out.println(objName+ " : " + y + " / " + yVelocity);
         
         x = (xVelocity * time) + (0.5*physics.xPull*time*time);
         xVelocity = xVelocity + physics.xPull * time;
-        if (xVelocity>dragCoeff){
-            xVelocity = xVelocity-((dragCoeff-xVelocity)*time) // xVelocity returns to terminal velocity in 1s
+        if (xVelocity>physics.dragCoeff){
+            xVelocity = xVelocity-((physics.dragCoeff-xVelocity)*time); // xVelocity returns to terminal velocity in 1s
         }
-        System.out.println(objName+ " : " x + " / " + xVelocity);
+        System.out.println(objName+ " : " + x + " / " + xVelocity);
     }
 }

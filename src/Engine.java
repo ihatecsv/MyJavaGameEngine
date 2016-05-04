@@ -34,7 +34,7 @@ public class Engine extends JPanel implements Runnable{
     private boolean paused = false;
 
     private static Bitmap screenMap = new Bitmap(WIDTH*SCALE, HEIGHT*SCALE);
-    private static PhysicsDomain screenDomain = new PhysicsDomain(WIDTH, HEIGHT);
+    private static PhysicsDomain screenDomain = new PhysicsDomain();
 
     public Engine(){
         setSize(WIDTH*SCALE, HEIGHT*SCALE);
@@ -95,9 +95,6 @@ public class Engine extends JPanel implements Runnable{
         BufferedImage bImage = new BufferedImage(WIDTH*SCALE, HEIGHT*SCALE, BufferedImage.TYPE_INT_RGB);
         //screenMap.set(Sprites.rect(64,64, new Bit(r1, g1, b1)), 0, 0);
 
-        screenDomain.simulate(TICKTIME*0.001);
-        screenMap.set(screenDomain.render(), 0, 0);
-
         for (int xC = 0; xC < WIDTH; xC++) {
             for (int yC = 0; yC < HEIGHT; yC++) {
                 Color c = new Color(screenMap.bitArray[xC][yC].r, screenMap.bitArray[xC][yC].g, screenMap.bitArray[xC][yC].b);
@@ -111,7 +108,7 @@ public class Engine extends JPanel implements Runnable{
     }
 
     public static void main(String[] args){
-        PhysicsObject newPhys = new PhysicsObject(50, 50, 0, 0 ,0);
+        PhysicsObject newPhys = new PhysicsObject(50, 50, 0, 0 , "box");
         screenDomain.add(newPhys);
         JFrame frame = new JFrame();
         Engine engine = new Engine();
