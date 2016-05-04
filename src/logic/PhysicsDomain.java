@@ -8,12 +8,8 @@ import java.util.ArrayList;
 
 public class PhysicsDomain {
     public ArrayList<PhysicsObject> physObjArray;
-    public int width;
-    public int height;
 
-    public PhysicsDomain(int width, int height){
-        this.width = width;
-        this.height = height;
+    public PhysicsDomain(){
         this.physObjArray = new ArrayList<PhysicsObject>();
     }
 
@@ -23,9 +19,7 @@ public class PhysicsDomain {
 
     public void simulate(double time){
         for(PhysicsObject obj : physObjArray){
-            if(obj.y < height-80) {
                 obj.simulate(time);
-            }
         }
     }
 
