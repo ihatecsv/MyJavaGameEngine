@@ -1,6 +1,7 @@
 import logic.MathHelper;
 import logic.PhysicsDomain;
 import logic.PhysicsObject;
+import logic.Physics;
 import render.Bit;
 import render.Bitmap;
 import render.Sprites;
