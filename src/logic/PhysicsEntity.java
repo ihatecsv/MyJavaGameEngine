@@ -2,7 +2,7 @@ package logic;
 
 // TODO rework drag, let it adjust slower
 
-public class PhysicsObject {
+public class PhysicsEntity {
     public double xVelocity;
     public double yVelocity;
     public double x;
@@ -10,7 +10,7 @@ public class PhysicsObject {
     public Physics physics;
     public String objName;
 
-    public PhysicsObject(double x, double y, double xVelocity, double yVelocity, String objName){
+    public PhysicsEntity(double x, double y, double xVelocity, double yVelocity, String objName){
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
         this.x = x;

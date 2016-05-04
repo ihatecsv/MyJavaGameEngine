@@ -1,10 +1,6 @@
-import logic.MathHelper;
 import logic.PhysicsDomain;
-import logic.PhysicsObject;
-import logic.Physics;
-import render.Bit;
+import logic.PhysicsEntity;
 import render.Bitmap;
-import render.Sprites;
 
 import java.awt.*;
 import java.awt.image.*;
@@ -108,7 +104,7 @@ public class Engine extends JPanel implements Runnable{
     }
 
     public static void main(String[] args){
-        PhysicsObject newPhys = new PhysicsObject(50, 50, 0, 0 , "box");
+        PhysicsEntity newPhys = new PhysicsEntity(50, 50, 0, 0 , "box");
         screenDomain.add(newPhys);
         JFrame frame = new JFrame();
         Engine engine = new Engine();
