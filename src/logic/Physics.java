@@ -7,6 +7,13 @@ public class Physics {
     *   properties.
     *   TODO: add exception handlers if physics zones overlap
     */
+    public double yPull;
+    public double xPull;
+    public double yUpperBound;
+    public double yLowerBound;
+    public double XLeftBound;
+    public double xRightBound;
+    public double dragCoeff;
     
     public void Physics(double yPull, double xPull, double xSize, double ySize, double xZoneCenter, double yZoneCenter, double dragCoeff){
         //Define "Gravity Laws"
