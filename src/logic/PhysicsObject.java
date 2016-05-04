@@ -16,6 +16,7 @@ public class PhysicsObject {
         this.x = x;
         this.y = y;
         this.objName = objName;
+        changePhysics();
     }
 
     public void changePhysics(Physics newPhysics){
